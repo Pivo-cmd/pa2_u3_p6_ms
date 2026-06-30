@@ -21,28 +21,20 @@ public class Main {
 
     public static class App implements QuarkusApplication {
         @Inject
-        private ReporteService repoService;
-        @Inject
-        private MailService mailService;
+        private FacturaService facturaService;
         @Override
         public int run(String... args) {
             System.out.println("\n"+"Conectandose a base de datos"+"\n");
-            Reporte r1 = new Reporte();
-            r1.setTitulo("Gastos Octubre");
-            r1.setTipo("Financiero");
-            r1.setDescripcion("Reporte de gastos durante el mes de Octubre");
-            r1.setFecha(LocalDate.of(2010, 10, 25));
-            repoService.guardar(r1);
-            System.out.println(repoService.buscarPorId(1));
+            String nombreHilo = Thread.currentThread().getName();
+            System.out.println("El hilo actual (Main) es: "+   nombreHilo);
+            System.out.println("ID: "+Thread.currentThread().threadId() + "\n");
 
-            Mail m1 = new Mail();
-            m1.setAsunto("Reunion");
-            m1.setCuerpo("La reunion de hoy será a las 3:00 pm");
-            m1.setDestinatario("matias@test.com");
-            m1.setFechaEnvio(LocalDate.of(2015, 5, 1));
-            mailService.guardar(m1);
-            System.out.println(mailService.buscarPorId(1));
 
+            Factura f1 = new Factura();
+            f1.setNumero("120301");
+            f1.setFecha(LocalDate.of(2015, 5, 1));
+            f1.setRuc( "1234567890");
+            this.facturaService.guardarFactura(f1);
             return 0;
         }
     }
